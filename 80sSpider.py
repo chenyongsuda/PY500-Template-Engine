@@ -93,6 +93,7 @@ def GetMovieDownLoadList(media):
         page_obj = requests.get(('http://www.80s.tw/movie/%s/%s') % (media.code, type))
         soup = BeautifulSoup(page_obj.text, "html5lib")
         movie_info_linkdiv = soup.select('.dllist1 .dlurlelement')
+        wapper = []
         for linkdiv in movie_info_linkdiv:
             item = [];
             item_url_xunlei = linkdiv.select_one('.dlbutton1 a')
@@ -107,7 +108,9 @@ def GetMovieDownLoadList(media):
             if len(feitu) > 0:
                 item.append(feitu)
             if len(xunlei) > 0 or len(feitu) > 0:
-                items[type] = item
+                wapper.append(item)
+        if len(wapper) > 0:
+            items[type] = wapper
     media.dn_list = items
 
 
@@ -126,9 +129,10 @@ GetMoiveListDetails()
 # types = ['bd-1', 'bt-1', 'hd-1', 'mp4-1']
 # items = {}
 # for type in types:
-#     page_obj = requests.get(('http://www.80s.tw/movie/20432/%s') % (type))
+#     page_obj = requests.get(('http://www.80s.tw/ju/21362/%s') % (type))
 #     soup = BeautifulSoup(page_obj.text, "html5lib")
 #     movie_info_linkdiv = soup.select('.dllist1 .dlurlelement')
+#     wapper = []
 #     for linkdiv in movie_info_linkdiv:
 #         item = [];
 #         item_url_xunlei = linkdiv.select_one('.dlbutton1 a')
@@ -143,7 +147,8 @@ GetMoiveListDetails()
 #         if len(feitu) > 0:
 #             item.append(feitu)
 #         if len(xunlei) > 0 or len(feitu) > 0:
-#             items[type] = item
+#             wapper.append(item)
+#     items[type] = wapper
 # print items
 
 # # http://www.80s.tw/movie/20775/bd-1    TV
